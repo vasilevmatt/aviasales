@@ -1,0 +1,22 @@
+@import '../../index.scss';
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+
+  padding-bottom: 10px;
+
+  @include aviasales-card;
+
+  &__heading {
+		padding: 20px 0 5px 20px;
+    @media (min-width: $tablet) {
+      padding: 20px 40px 10px 20px;
+    }
+
+    line-height: 12px;
+  }
+
+  @include aviasales-text-transform;
+}

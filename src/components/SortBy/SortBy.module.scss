@@ -1,0 +1,66 @@
+@import '../../index.scss';
+
+.sort-by {
+  width: 100%;
+  &__button {
+    @include reset-button;
+    padding: clamp(13px, 2.75vw, 15px);
+    background-color: $card-color;
+
+    height: 50px;
+    width: 100%;
+
+    @media (min-width: $tablet) {
+      width: clamp(146px, 33.333%, 168px);
+    }
+
+    @include aviasales-text-transform;
+
+    border: 1px solid $stroke-color;
+    cursor: pointer;
+
+    &--active {
+      border-color: $accent-color;
+      background-color: $accent-color;
+      color: $card-color;
+      cursor: default;
+
+      & + button {
+        border-top-color: $accent-color;
+
+        @media (min-width: $tablet) {
+        border-top-color: $stroke-color;
+
+          border-left-color: $accent-color;
+        }
+      }
+    }
+
+    &:first-child {
+      border-top-left-radius: $border-radius;
+      border-top-right-radius: $border-radius;
+
+      @media (min-width: $tablet) {
+        border-top-right-radius: 0;
+
+        border-bottom-left-radius: $border-radius;
+        border-right: 0;
+      }
+    }
+    &:last-child {
+      border-bottom-right-radius: $border-radius;
+      border-bottom-left-radius: $border-radius;
+      border-top: 0;
+
+
+      @media (min-width: $tablet) {
+      border-bottom-left-radius: 0;
+
+      border-top-right-radius: $border-radius;
+      
+      border-left: 0;
+      border-top: 1px solid $stroke-color;
+      }
+    }
+  }
+}

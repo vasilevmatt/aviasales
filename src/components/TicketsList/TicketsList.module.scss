@@ -1,0 +1,24 @@
+@import '../../sass/variables';
+@import '../../sass/mixins';
+
+.results {
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+
+	&__show-more-button {
+		@include reset-button;
+    padding: clamp(13px, 2.75vw, 15px);
+    background-color: $card-color;
+    border-radius: $border-radius;
+		cursor: pointer;
+
+    height: 50px;
+    width: 100%;
+    
+		@include aviasales-text-transform;
+		border-color: $accent-color;
+		background-color: $accent-color;
+		color: $card-color;
+	}
+}

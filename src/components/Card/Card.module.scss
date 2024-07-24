@@ -1,0 +1,61 @@
+@import '../../index';
+
+.card {
+	@include aviasales-card;
+	@include aviasales-text-transform;
+	
+	padding: 20px;
+
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__price {
+		color: $accent-color;
+		letter-spacing: normal;
+		font-size: 24px;
+		
+	}
+
+}
+
+.route {
+		display: flex;
+		flex-direction: column;
+		row-gap: 10px;
+
+		&__line {
+			display: flex;
+			flex-direction: row;
+			column-gap: 20px;
+		}
+}
+
+.info {
+	
+	&__heading {
+		color: $light-color;
+		font-size: 12px;
+		width: 24vw;
+		@media (min-width: $tablet) {
+			width: 141px;
+		}
+		
+		
+	}
+
+	&__time {
+		text-transform: none;
+	}
+	&__span {
+		font-size: 14px;
+		letter-spacing: normal;
+	}
+
+
+}

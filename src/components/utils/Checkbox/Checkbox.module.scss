@@ -1,0 +1,61 @@
+@import '../../../sass/variables';
+@import '../../../sass/mixins';
+
+.checkbox {
+  cursor: pointer;
+	padding: 10px 40px 10px 20px;
+  display: flex;
+  align-items: center;
+  height: 40px;
+
+
+	@include hover {
+		background-color: $hover-color;
+	}
+
+	&__input {
+    opacity: 0;
+		margin: 0;
+    @include square(20px);
+  }
+
+	&__title {
+		text-transform: none;
+		font-weight: 400;
+		font-size: 13px;
+		letter-spacing: normal;
+    line-height: 20px;
+	}
+
+  &__wrap {
+    position: relative;
+    margin-right: 10px;
+
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: $border-checkbox;
+      left: 0;
+      top: calc(50% - 10px);
+      border-radius: 2px;
+    }
+    &:has(.checkbox__input:checked)::before {
+      border: 1px solid $accent-color;
+    }
+
+    &:has(.checkbox__input:checked)::after {
+      content: url(./checked.svg);
+      position: absolute;
+      top: calc(50% - 8px);
+      left: 4px;
+      width: 12px;
+      height: 8px;
+      border-radius: 3px;
+    }
+  }
+
+  
+}
