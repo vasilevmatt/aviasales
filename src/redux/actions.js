@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { FETCH_TICKETS, SET_ALL_FILTERS, SET_FILTER, SET_LOADING, SET_SORT_ORDER } from './types'
 
 export const setSortOrder = (order) => ({
@@ -41,6 +42,7 @@ export const getTickets = () => async (dispatch) => {
             return {
               ...ticket,
               maxStops,
+              id: _.uniqueId(ticket.carrier),
             }
           })
           dispatch(setTickets(ticketsArray))

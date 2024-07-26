@@ -5,7 +5,6 @@ import { getTickets } from '../../redux/actions'
 import Card from '../Card/Card'
 import SortBy from '../SortBy/SortBy'
 import classes from './TicketsList.module.scss'
-import _ from 'lodash'
 
 function Loading() {
   return (
@@ -62,7 +61,7 @@ function renderContent(tickets, ticketsData, shownTicketsNumber, loadingMore, sh
 }
 
 function renderCards(ticketsData, shownTicketsNumber) {
-  return ticketsData.slice(0, shownTicketsNumber).map((item) => <Card {...item} key={_.uniqueId(item.carrier)} />)
+  return ticketsData.slice(0, shownTicketsNumber).map((item) => <Card {...item} key={item.id} />)
 }
 
 function renderShowMoreButton(ticketsData, shownTicketsNumber, loadingMore, showMoreTickets) {

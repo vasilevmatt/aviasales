@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { add, format } from 'date-fns'
 import classes from './Card.module.scss'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const RouteLine = React.memo(({ origin, destination, departureTime, arrivalTime, duration, stops, hubs }) => {
   return (
@@ -28,6 +30,8 @@ const RouteLine = React.memo(({ origin, destination, departureTime, arrivalTime,
 })
 
 const Card = React.memo(({ price, carrier, segments }) => {
+  const [imageLoading, setImageLoading] = useState(true)
+
   // Первый сегмент (туда)
   const formattedFlightFromTime = format(new Date(segments[0].date), 'HH:mm')
   const flightFromTimeArrival = add(new Date(segments[0].date), { minutes: segments[0].duration })
@@ -74,7 +78,15 @@ const Card = React.memo(({ price, carrier, segments }) => {
     <div className={classes.card}>
       <div className={classes.card__header}>
         <span className={classes.card__price}>{price} Р</span>
-        <img src={`https://pics.avs.io/330/108/${carrier}.png?=v1`} alt="airline" width={110} height={36} />
+        {imageLoading && <Skeleton width={110} height={36} />}
+        <img
+          src={`https://pics.avs.io/330/108/${carrier}.png?v=1`}
+          alt="airline"
+          width={110}
+          height={36}
+          onLoad={() => setTimeout(() => setImageLoading(false), 600)}
+          style={{ display: imageLoading ? 'none' : 'block' }}
+        />
       </div>
       <div className={`${classes.card__route} ${classes.route}`}>
         <RouteLine

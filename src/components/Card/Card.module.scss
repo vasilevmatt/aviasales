@@ -20,12 +20,14 @@
   &__header {
     display: flex;
     justify-content: space-between;
+    height: 36px;
   }
 
   &__price {
     color: $accent-color;
     letter-spacing: normal;
     font-size: 24px;
+    
   }
 }
 
