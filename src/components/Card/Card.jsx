@@ -1,9 +1,10 @@
+import React from 'react'
 import { add, format } from 'date-fns'
 import classes from './Card.module.scss'
 
-function RouteLine({ origin, destination, departureTime, arrivalTime, duration, stops, hubs }) {
+const RouteLine = React.memo(({ origin, destination, departureTime, arrivalTime, duration, stops, hubs }) => {
   return (
-    <div className={`${classes.route__line}`}>
+    <div className={classes.route__line}>
       <div className={`${classes['card__info-block']} info`}>
         <p className={`${classes.info__heading}`}>
           {origin} - {destination}
@@ -24,9 +25,9 @@ function RouteLine({ origin, destination, departureTime, arrivalTime, duration, 
       </div>
     </div>
   )
-}
+})
 
-export default function Card({ price, carrier, segments }) {
+const Card = React.memo(({ price, carrier, segments }) => {
   // Первый сегмент (туда)
   const formattedFlightFromTime = format(new Date(segments[0].date), 'HH:mm')
   const flightFromTimeArrival = add(new Date(segments[0].date), { minutes: segments[0].duration })
@@ -35,12 +36,10 @@ export default function Card({ price, carrier, segments }) {
   const durationFrom = segments[0].duration
   const hoursFrom = Math.floor(durationFrom / 60)
   const minutesFrom = durationFrom % 60
-  const formattedFlightFromDuration = `${hoursFrom > 0 ? `${hoursFrom}ч ` : ''}${
-    minutesFrom > 0 ? `${minutesFrom}м` : ''
-  }`
+  const formattedFlightFromDuration = `${hoursFrom > 0 ? `${hoursFrom}ч ` : ''}${minutesFrom > 0 ? `${minutesFrom}м` : ''}`
 
   const flightFromStopsCount = segments[0].stops.length
-  const formattedFlightFromHubs = segments[0].stops.length > 0 ? segments[0].stops.join(', ') : 'Прямой'
+  const formattedFlightFromHubs = flightFromStopsCount > 0 ? segments[0].stops.join(', ') : 'Прямой'
   const formattedFlightFromStops =
     flightFromStopsCount === 0
       ? 'Без пересадок'
@@ -61,7 +60,7 @@ export default function Card({ price, carrier, segments }) {
   const formattedFlightToDuration = `${hoursTo > 0 ? `${hoursTo}ч ` : ''}${minutesTo > 0 ? `${minutesTo}м` : ''}`
 
   const flightToStopsCount = segments[1].stops.length
-  const formattedFlightToHubs = segments[1].stops.length > 0 ? segments[1].stops.join(', ') : 'Прямой'
+  const formattedFlightToHubs = flightToStopsCount > 0 ? segments[1].stops.join(', ') : 'Прямой'
   const formattedFlightToStops =
     flightToStopsCount === 0
       ? 'Без пересадок'
@@ -72,10 +71,10 @@ export default function Card({ price, carrier, segments }) {
           : `${flightToStopsCount} пересадок`
 
   return (
-    <div className={`${classes.card}`}>
-      <div className={`${classes.card__header}`}>
-        <span className={`${classes.card__price}`}>{price} Р</span>
-        <img src={`https://pics.avs.io/330/108/${carrier}.png`} alt="airline" width={110} height={36} />
+    <div className={classes.card}>
+      <div className={classes.card__header}>
+        <span className={classes.card__price}>{price} Р</span>
+        <img src={`https://pics.avs.io/330/108/${carrier}.png?=v1`} alt="airline" width={110} height={36} />
       </div>
       <div className={`${classes.card__route} ${classes.route}`}>
         <RouteLine
@@ -99,4 +98,6 @@ export default function Card({ price, carrier, segments }) {
       </div>
     </div>
   )
-}
+})
+
+export default Card
