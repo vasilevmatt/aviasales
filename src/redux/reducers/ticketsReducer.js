@@ -1,29 +1,21 @@
-import { FETCH_TICKETS_FAILURE, FETCH_TICKETS_REQUEST, FETCH_TICKETS_SUCCESS } from '../types'
+import { FETCH_TICKETS, SET_LOADING } from '../types'
 
 const initialState = {
-  loading: false,
-  flights: [],
-  error: null,
+  loading: true,
+  tickets: [],
 }
 
 export const ticketsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_TICKETS_REQUEST:
+    case FETCH_TICKETS:
       return {
         ...state,
-        loading: true,
+        tickets: [...state.tickets, ...action.payload],
       }
-    case FETCH_TICKETS_SUCCESS:
+    case SET_LOADING:
       return {
         ...state,
-        flights: action.payload,
-        loading: false,
-      }
-    case FETCH_TICKETS_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.error,
+        loading: action.payload,
       }
     default:
       return state

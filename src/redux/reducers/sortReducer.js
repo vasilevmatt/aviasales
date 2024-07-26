@@ -1,7 +1,7 @@
 import { SET_SORT_ORDER } from '../types'
 
 const initialState = {
-  order: 'Самый дешевый',
+  order: 'cheapest',
 }
 
 export const sortReducer = (state = initialState, action) => {

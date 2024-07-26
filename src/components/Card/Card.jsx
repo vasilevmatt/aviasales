@@ -1,45 +1,101 @@
+import { add, format } from 'date-fns'
 import classes from './Card.module.scss'
 
-export default function Card() {
+function RouteLine({ origin, destination, departureTime, arrivalTime, duration, stops, hubs }) {
+  return (
+    <div className={`${classes.route__line}`}>
+      <div className={`${classes['card__info-block']} info`}>
+        <p className={`${classes.info__heading}`}>
+          {origin} - {destination}
+        </p>
+        <p className={`${classes.info__span}`}>
+          {departureTime} - {arrivalTime}
+        </p>
+      </div>
+      <div className={`${classes['card__info-block']} info`}>
+        <p className={`${classes.info__heading}`}>В пути</p>
+        <time dateTime="" className={`${classes.info__span} ${classes.info__time}`}>
+          {duration}
+        </time>
+      </div>
+      <div className={`${classes['card__info-block']} info`}>
+        <p className={`${classes.info__heading}`}>{stops}</p>
+        <p className={`${classes.info__span}`}>{hubs}</p>
+      </div>
+    </div>
+  )
+}
+
+export default function Card({ price, carrier, segments }) {
+  // Первый сегмент (туда)
+  const formattedFlightFromTime = format(new Date(segments[0].date), 'HH:mm')
+  const flightFromTimeArrival = add(new Date(segments[0].date), { minutes: segments[0].duration })
+  const formattedFlightFromTimeArrival = format(flightFromTimeArrival, 'HH:mm')
+
+  const durationFrom = segments[0].duration
+  const hoursFrom = Math.floor(durationFrom / 60)
+  const minutesFrom = durationFrom % 60
+  const formattedFlightFromDuration = `${hoursFrom > 0 ? `${hoursFrom}ч ` : ''}${
+    minutesFrom > 0 ? `${minutesFrom}м` : ''
+  }`
+
+  const flightFromStopsCount = segments[0].stops.length
+  const formattedFlightFromHubs = segments[0].stops.length > 0 ? segments[0].stops.join(', ') : 'Прямой'
+  const formattedFlightFromStops =
+    flightFromStopsCount === 0
+      ? 'Без пересадок'
+      : flightFromStopsCount === 1
+        ? '1 пересадка'
+        : flightFromStopsCount === 2 || flightFromStopsCount === 3
+          ? `${flightFromStopsCount} пересадки`
+          : `${flightFromStopsCount} пересадок`
+
+  // Второй сегмент (обратно)
+  const formattedFlightToTime = format(new Date(segments[1].date), 'HH:mm')
+  const flightToTimeArrival = add(new Date(segments[1].date), { minutes: segments[1].duration })
+  const formattedFlightToTimeArrival = format(flightToTimeArrival, 'HH:mm')
+
+  const durationTo = segments[1].duration
+  const hoursTo = Math.floor(durationTo / 60)
+  const minutesTo = durationTo % 60
+  const formattedFlightToDuration = `${hoursTo > 0 ? `${hoursTo}ч ` : ''}${minutesTo > 0 ? `${minutesTo}м` : ''}`
+
+  const flightToStopsCount = segments[1].stops.length
+  const formattedFlightToHubs = segments[1].stops.length > 0 ? segments[1].stops.join(', ') : 'Прямой'
+  const formattedFlightToStops =
+    flightToStopsCount === 0
+      ? 'Без пересадок'
+      : flightToStopsCount === 1
+        ? '1 пересадка'
+        : flightToStopsCount === 2 || flightToStopsCount === 3
+          ? `${flightToStopsCount} пересадки`
+          : `${flightToStopsCount} пересадок`
+
   return (
     <div className={`${classes.card}`}>
       <div className={`${classes.card__header}`}>
-        <span className={`${classes.card__price}`}>13 400 Р</span>
-        <img src="https://pics.avs.io/330/108/S7.png" alt="airline" width={110} height={36} />
+        <span className={`${classes.card__price}`}>{price} Р</span>
+        <img src={`https://pics.avs.io/330/108/${carrier}.png`} alt="airline" width={110} height={36} />
       </div>
       <div className={`${classes.card__route} ${classes.route}`}>
-        <div className={`${classes.route__line}`}>
-          <div className={`${classes['card__info-block']} info`}>
-            <p className={`${classes.info__heading}`}>MOW - HKT</p>
-            <p className={`${classes.info__span}`}>10:45 - 08:00</p>
-          </div>
-          <div className={`${classes['card__info-block']} info`}>
-            <p className={`${classes.info__heading}`}>В пути</p>
-            <time dateTime="" className={`${classes.info__span} ${classes.info__time}`}>
-              21ч 15м
-            </time>
-          </div>
-          <div className={`${classes['card__info-block']} info`}>
-            <p className={`${classes.info__heading}`}>2 пересадки</p>
-            <p className={`${classes.info__span}`}>HKG, JNB</p>
-          </div>
-        </div>
-        <div className={`${classes.route__line}`}>
-          <div className={`${classes['card__info-block']} info`}>
-            <p className={`${classes.info__heading}`}>MOW - HKT</p>
-            <p className={`${classes.info__span}`}>11:20 - 00:50</p>
-          </div>
-          <div className={`${classes['card__info-block']} info`}>
-            <p className={`${classes.info__heading}`}>В пути</p>
-            <time dateTime="" className={`${classes.info__span} ${classes.info__time}`}>
-              13ч 30м
-            </time>
-          </div>
-          <div className={`${classes['card__info-block']} info`}>
-            <p className={`${classes.info__heading}`}>1 пересадка</p>
-            <p className={`${classes.info__span}`}>HKG</p>
-          </div>
-        </div>
+        <RouteLine
+          origin={segments[0].origin}
+          destination={segments[0].destination}
+          departureTime={formattedFlightFromTime}
+          arrivalTime={formattedFlightFromTimeArrival}
+          duration={formattedFlightFromDuration}
+          stops={formattedFlightFromStops}
+          hubs={formattedFlightFromHubs}
+        />
+        <RouteLine
+          origin={segments[1].origin}
+          destination={segments[1].destination}
+          departureTime={formattedFlightToTime}
+          arrivalTime={formattedFlightToTimeArrival}
+          duration={formattedFlightToDuration}
+          stops={formattedFlightToStops}
+          hubs={formattedFlightToHubs}
+        />
       </div>
     </div>
   )

@@ -1,61 +1,68 @@
 @import '../../index';
 
 .card {
-	@include aviasales-card;
-	@include aviasales-text-transform;
-	
-	padding: 20px;
+  @include aviasales-card;
+  @include aviasales-text-transform;
+  @include hover {
+    box-shadow: $box-shadow--hover;
+    transition-duration: 0.4s;
+    transition-delay: 0s;
 
-	display: flex;
-	flex-direction: column;
-	row-gap: 20px;
+  }
+  transition-delay: 0.2s;
+  transition-duration: 0.4s;
+  padding: 20px;
 
-	&__header {
-		display: flex;
-		justify-content: space-between;
-	}
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
 
-	&__price {
-		color: $accent-color;
-		letter-spacing: normal;
-		font-size: 24px;
-		
-	}
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
 
+  &__price {
+    color: $accent-color;
+    letter-spacing: normal;
+    font-size: 24px;
+  }
 }
 
 .route {
-		display: flex;
-		flex-direction: column;
-		row-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
 
-		&__line {
-			display: flex;
-			flex-direction: row;
-			column-gap: 20px;
-		}
+  &__line {
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+    @media (min-width: $tablet) {
+      column-gap: 20px;
+    }
+  }
 }
 
 .info {
-	
-	&__heading {
-		color: $light-color;
-		font-size: 12px;
-		width: 24vw;
-		@media (min-width: $tablet) {
-			width: 141px;
-		}
-		
-		
-	}
+  &__heading {
+    color: $light-color;
+    font-size: 12px;
+    width: 27vw;
+    @media (min-width: $tablet) {
+      width: 24vw;
+    }
+    @media (min-width: $tablet) {
+      width: 141px;
+    }
+  }
 
-	&__time {
+  &__time {
+    text-transform: none;
+  }
+  &__span {
+    font-size: 14px;
+    letter-spacing: normal;
 		text-transform: none;
-	}
-	&__span {
-		font-size: 14px;
-		letter-spacing: normal;
-	}
-
-
+  }
 }

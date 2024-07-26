@@ -9,6 +9,7 @@
 
     height: 50px;
     width: 100%;
+    min-width: 151px;
 
     @media (min-width: $tablet) {
       width: clamp(146px, 33.333%, 168px);
@@ -24,12 +25,15 @@
       background-color: $accent-color;
       color: $card-color;
       cursor: default;
+      
+
 
       & + button {
         border-top-color: $accent-color;
 
         @media (min-width: $tablet) {
         border-top-color: $stroke-color;
+        
 
           border-left-color: $accent-color;
         }
@@ -39,12 +43,21 @@
     &:first-child {
       border-top-left-radius: $border-radius;
       border-top-right-radius: $border-radius;
+      border-bottom: 0;
+
+      &:not(.sort-by__button--active) {
+        @media (min-width: $tablet) {
+          border-bottom: 1px solid $stroke-color;
+        }
+      }
+
 
       @media (min-width: $tablet) {
         border-top-right-radius: 0;
 
         border-bottom-left-radius: $border-radius;
         border-right: 0;
+
       }
     }
     &:last-child {

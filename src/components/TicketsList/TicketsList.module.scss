@@ -1,24 +1,29 @@
-@import '../../sass/variables';
-@import '../../sass/mixins';
+@import '../../index.scss';
 
 .results {
-	display: flex;
-	flex-direction: column;
-	row-gap: 20px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
 
-	&__show-more-button {
-		@include reset-button;
+  &__loading {
+		fill: black;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__show-more-button {
+    @include reset-button;
     padding: clamp(13px, 2.75vw, 15px);
     background-color: $card-color;
     border-radius: $border-radius;
-		cursor: pointer;
+    cursor: pointer;
 
     height: 50px;
     width: 100%;
-    
-		@include aviasales-text-transform;
-		border-color: $accent-color;
-		background-color: $accent-color;
-		color: $card-color;
-	}
+
+    @include aviasales-text-transform;
+    border-color: $accent-color;
+    background-color: $accent-color;
+    color: $card-color;
+  }
 }
