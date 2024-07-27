@@ -8,12 +8,13 @@ body {
   background-color: $background-color;
   color: $dark-color;
 
-
 }
 
 main {
   padding-inline: 10px;
   padding-block: 2.25vh;
+
+
 
 
   @media (min-width: $tablet) {
@@ -31,5 +32,10 @@ main {
   @media (min-width: $tablet) {
     flex-direction: row;
   }
+}
+
+*:focus-visible {
+  outline: 3px solid $accent-color;
+  outline-offset: 2px;
 }
 
