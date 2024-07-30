@@ -8,6 +8,20 @@ import RouteLine from './components/RouteLine'
 const Card = React.memo(({ price, carrier, segments }) => {
   const [imageLoading, setImageLoading] = useState(true)
 
+  function getFormattedFlightStops(stopsCount) {
+    switch (stopsCount) {
+      case 0:
+        return 'Без пересадок'
+      case 1:
+        return '1 пересадка'
+      case 2:
+      case 3:
+      case 4:
+        return `${stopsCount} пересадки`
+      default:
+        return `${stopsCount} пересадок`
+    }
+  }
   // Первый сегмент (туда)
   const formattedFlightFromTime = format(new Date(segments[0].date), 'HH:mm')
   const flightFromTimeArrival = add(new Date(segments[0].date), { minutes: segments[0].duration })
@@ -20,23 +34,7 @@ const Card = React.memo(({ price, carrier, segments }) => {
 
   const flightFromStopsCount = segments[0].stops.length
   const formattedFlightFromHubs = flightFromStopsCount > 0 ? segments[0].stops.join(', ') : 'Прямой'
-
-  function getFormattedFlightFromStops(flightFromStopsCount) {
-    switch (flightFromStopsCount) {
-      case 0:
-        return 'Без пересадок'
-      case 1:
-        return '1 пересадка'
-      case 2:
-      case 3:
-      case 4:
-        return `${flightFromStopsCount} пересадки`
-      default:
-        return `${flightFromStopsCount} пересадок`
-    }
-  }
-
-  const formattedFlightFromStops = getFormattedFlightFromStops(flightFromStopsCount)
+  const formattedFlightFromStops = getFormattedFlightStops(flightFromStopsCount)
 
   // Второй сегмент (обратно)
   const formattedFlightToTime = format(new Date(segments[1].date), 'HH:mm')
@@ -51,21 +49,7 @@ const Card = React.memo(({ price, carrier, segments }) => {
   const flightToStopsCount = segments[1].stops.length
   const formattedFlightToHubs = flightToStopsCount > 0 ? segments[1].stops.join(', ') : 'Прямой'
 
-  function getFormattedFlightToStops(flightToStopsCount) {
-    switch (flightToStopsCount) {
-      case 0:
-        return 'Без пересадок'
-      case 1:
-        return '1 пересадка'
-      case 2:
-      case 3:
-      case 4:
-        return `${flightToStopsCount} пересадки`
-      default:
-        return `${flightToStopsCount} пересадок`
-    }
-  }
-  const formattedFlightToStops = getFormattedFlightToStops(flightToStopsCount)
+  const formattedFlightToStops = getFormattedFlightStops(flightToStopsCount)
 
   return (
     <div className={classes.card}>
