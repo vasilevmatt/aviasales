@@ -3,31 +3,7 @@ import { add, format } from 'date-fns'
 import classes from './Card.module.scss'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-
-const RouteLine = React.memo(({ origin, destination, departureTime, arrivalTime, duration, stops, hubs }) => {
-  return (
-    <div className={classes.route__line}>
-      <div className={`${classes['card__info-block']} info`}>
-        <p className={`${classes.info__heading}`}>
-          {origin} - {destination}
-        </p>
-        <p className={`${classes.info__span}`}>
-          {departureTime} - {arrivalTime}
-        </p>
-      </div>
-      <div className={`${classes['card__info-block']} info`}>
-        <p className={`${classes.info__heading}`}>В пути</p>
-        <time dateTime="" className={`${classes.info__span} ${classes.info__time}`}>
-          {duration}
-        </time>
-      </div>
-      <div className={`${classes['card__info-block']} info`}>
-        <p className={`${classes.info__heading}`}>{stops}</p>
-        <p className={`${classes.info__span}`}>{hubs}</p>
-      </div>
-    </div>
-  )
-})
+import RouteLine from './components/RouteLine'
 
 const Card = React.memo(({ price, carrier, segments }) => {
   const [imageLoading, setImageLoading] = useState(true)
@@ -44,14 +20,23 @@ const Card = React.memo(({ price, carrier, segments }) => {
 
   const flightFromStopsCount = segments[0].stops.length
   const formattedFlightFromHubs = flightFromStopsCount > 0 ? segments[0].stops.join(', ') : 'Прямой'
-  const formattedFlightFromStops =
-    flightFromStopsCount === 0
-      ? 'Без пересадок'
-      : flightFromStopsCount === 1
-        ? '1 пересадка'
-        : flightFromStopsCount === 2 || flightFromStopsCount === 3
-          ? `${flightFromStopsCount} пересадки`
-          : `${flightFromStopsCount} пересадок`
+
+  function getFormattedFlightFromStops(flightFromStopsCount) {
+    switch (flightFromStopsCount) {
+      case 0:
+        return 'Без пересадок'
+      case 1:
+        return '1 пересадка'
+      case 2:
+      case 3:
+      case 4:
+        return `${flightFromStopsCount} пересадки`
+      default:
+        return `${flightFromStopsCount} пересадок`
+    }
+  }
+
+  const formattedFlightFromStops = getFormattedFlightFromStops(flightFromStopsCount)
 
   // Второй сегмент (обратно)
   const formattedFlightToTime = format(new Date(segments[1].date), 'HH:mm')
@@ -65,14 +50,22 @@ const Card = React.memo(({ price, carrier, segments }) => {
 
   const flightToStopsCount = segments[1].stops.length
   const formattedFlightToHubs = flightToStopsCount > 0 ? segments[1].stops.join(', ') : 'Прямой'
-  const formattedFlightToStops =
-    flightToStopsCount === 0
-      ? 'Без пересадок'
-      : flightToStopsCount === 1
-        ? '1 пересадка'
-        : flightToStopsCount === 2 || flightToStopsCount === 3
-          ? `${flightToStopsCount} пересадки`
-          : `${flightToStopsCount} пересадок`
+
+  function getFormattedFlightToStops(flightToStopsCount) {
+    switch (flightToStopsCount) {
+      case 0:
+        return 'Без пересадок'
+      case 1:
+        return '1 пересадка'
+      case 2:
+      case 3:
+      case 4:
+        return `${flightToStopsCount} пересадки`
+      default:
+        return `${flightToStopsCount} пересадок`
+    }
+  }
+  const formattedFlightToStops = getFormattedFlightToStops(flightToStopsCount)
 
   return (
     <div className={classes.card}>
